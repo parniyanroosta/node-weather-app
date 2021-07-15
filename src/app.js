@@ -5,6 +5,8 @@ const geocode = require('./utils/geocode')
 const forecast = require ('./utils/forecast')
 
 const app = express()
+//to extract the value of the port that heroku wants and works with:
+const port = process.env.PORT || 3000  // if we run the project locally , it will use the 3000
 
 //define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -42,8 +44,6 @@ app.get('/help', (req, res)=> {
         name:'Parniyan'
     })
 })
-
-
 
 app.get ('/weather', (req, res)=> {
      if( ! req.query.address) {
@@ -84,14 +84,6 @@ app.get('/products', (req, res) => {
     })
 })
 
-
-
-
-
-
-
-
-
 app.get('/help/*', (req, res)=> {
     res.render('404', {
         title:'404 help',
@@ -111,7 +103,9 @@ app.get('*', (req, res)=> { //* means match anything
     })
 })
 
-app.listen(3000, ()=> {
-    console.log( 'Server is listening on port 3000')
+
+ //heroku has the dynamically changing port number, so to get that at any time:
+app.listen(port, ()=> {  
+    console.log( 'Server is listening on port '+ port)
 })
 
